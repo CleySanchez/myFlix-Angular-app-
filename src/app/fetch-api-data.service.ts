@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class FetchApiDataService {
   
   // Replace with your actual API URL
-  private apiUrl = 'https://my-movie-flix-777-b5447997dd22.herokuapp.com';
+  private apiUrl = 'https://my-movie-flix-777-b5447997dd22.herokuapp.com/';  // Make sure the trailing slash is included
+
 
   constructor(private http: HttpClient) {}
 
