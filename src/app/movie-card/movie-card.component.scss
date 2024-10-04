@@ -1,0 +1,50 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.movies-grid {
+  margin: 20px;
+}
+
+.mat-card {
+  max-width: 280px; /* Consistent card width */
+  height: 100%;     /* Make sure the content is contained */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-img {
+  height: 400px;  /* Ensure uniform image height */
+  object-fit: cover;
+}
+
+.mat-card-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.mat-card-content {
+  flex-grow: 1;  /* Makes the content take up available space */
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.mat-card-actions button, .mat-card-actions mat-icon {
+  font-size: 14px;
+}
+
+.mat-grid-tile {
+  min-height: 550px; /* Ensures all cards have the same height */
+  display: flex;
+  align-items: stretch;  /* Ensure the card stretches evenly */
+}
+
+.mat-card-content p {
+  margin: 5px 0;
+  font-size: 14px;
+}

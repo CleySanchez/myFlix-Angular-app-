@@ -1,0 +1,37 @@
+<header>
+  <mat-toolbar color="primary">
+    <span>MyFlix</span>
+    <span class="spacer"></span>
+    <a mat-button routerLink="/movies">Movies</a>
+    <a mat-button routerLink="/profile">Profile</a>
+    <a mat-button routerLink="/favorites">Favorites</a>
+    <button mat-button (click)="logout()">Logout</button>
+  </mat-toolbar>
+</header>
+
+<!-- Display the movies as a grid with cards large enough to show all features -->
+<div class="movies-grid">
+  <mat-grid-list cols="4" gutterSize="20px" rowHeight="550px"> <!-- Adjust rowHeight to make cards larger -->
+    <mat-grid-tile *ngFor="let movie of movies">
+      <mat-card class="movie-card">
+        <mat-card-header>
+          <mat-card-title>{{ movie.Title }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="movie.ImagePath" alt="{{ movie.Title }}" class="movie-img" />
+
+        <mat-card-content>
+          
+          <p><strong>Genre:</strong> {{ movie.Genre.Name }}</p>
+          <p><strong>Director:</strong> {{ movie.Director.Name }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="openGenreDialog(movie.Genre)">Genre</button>
+          <button mat-button color="primary" (click)="openDirectorDialog(movie.Director)">Director</button>
+          <button mat-button color="primary" (click)="openDetailsDialog(movie)">Details</button>
+          <mat-icon (click)="addToFavorites(movie._id)" style="cursor: pointer;">favorite_border</mat-icon>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

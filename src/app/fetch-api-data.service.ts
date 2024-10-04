@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,9 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class FetchApiDataService {
   
-  // Replace with your actual API URL
-  private apiUrl = 'https://my-movie-flix-777-b5447997dd22.herokuapp.com/';  // Make sure the trailing slash is included
-
+  // API Base URL (with trailing slash to avoid path issues)
+  private apiUrl = 'https://my-movie-flix-777-b5447997dd22.herokuapp.com/';
 
   constructor(private http: HttpClient) {}
 
@@ -48,28 +47,53 @@ export class FetchApiDataService {
     return this.http.get(`${this.apiUrl}users/${username}`);
   }
 
-  // 8. Get Favorite Movies for a User
+  // 8. Get Favorite Movies for a User (with auth token)
   public getFavoriteMovies(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}users/${username}/favorites`);
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.apiUrl}users/${username}/favorites`, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`  // Assuming token is stored in localStorage
+      })
+    });
   }
 
-  // 9. Add a Movie to Favorite Movies for a User
+  // 9. Add a Movie to Favorite Movies for a User (with auth token)
   public addFavoriteMovie(username: string, movieId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}users/${username}/favorites/${movieId}`, {});
+    const token = localStorage.getItem('token');
+    return this.http.post(`${this.apiUrl}users/${username}/favorites/${movieId}`, {}, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    });
   }
 
-  // 10. Edit User Info
+  // 10. Edit User Info (with auth token)
   public editUser(username: string, userDetails: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}users/${username}`, userDetails);
+    const token = localStorage.getItem('token');
+    return this.http.put(`${this.apiUrl}users/${username}`, userDetails, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    });
   }
 
-  // 11. Delete a User by Username
+  // 11. Delete a User by Username (with auth token)
   public deleteUser(username: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}users/${username}`);
+    const token = localStorage.getItem('token');
+    return this.http.delete(`${this.apiUrl}users/${username}`, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    });
   }
 
-  // 12. Delete a Movie from a User's Favorite Movies
+  // 12. Delete a Movie from a User's Favorite Movies (with auth token)
   public removeFavoriteMovie(username: string, movieId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}users/${username}/favorites/${movieId}`);
+    const token = localStorage.getItem('token');
+    return this.http.delete(`${this.apiUrl}users/${username}/favorites/${movieId}`, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    });
   }
 }

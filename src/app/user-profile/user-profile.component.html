@@ -1,0 +1,21 @@
+<div class="profile-container">
+  <h2>Edit Your Profile</h2>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="userData.Username" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="userData.Email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="userData.Password" type="password" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="updateProfile()">Save Changes</button>
+  <button mat-raised-button color="warn" (click)="deleteProfile()">Delete Account</button>
+</div>
