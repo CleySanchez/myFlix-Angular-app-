@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,11 +10,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UserProfileComponent implements OnInit {
   userData: any = {};
+  favoriteMovies: any[] = [];
 
-  constructor(private fetchApiData: FetchApiDataService, private snackBar: MatSnackBar) {}
+  constructor(
+    private fetchApiData: FetchApiDataService, 
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getUserProfile();
+    this.getFavoriteMovies();
   }
 
   // Get current user profile data
@@ -29,7 +36,16 @@ export class UserProfileComponent implements OnInit {
       });
     }
   }
-  
+
+  // Get favorite movies for the user
+  getFavoriteMovies(): void {
+    const username: string = localStorage.getItem('user') || '';  // Get username from localStorage
+    if (username) {
+      this.fetchApiData.getFavoriteMovies(username).subscribe((resp: any) => {
+        this.favoriteMovies = resp;  // Assume the response contains the favorite movies array
+      });
+    }
+  }
 
   // Update user profile
   updateProfile(): void {
@@ -44,6 +60,15 @@ export class UserProfileComponent implements OnInit {
       this.snackBar.open('Account deleted', 'OK', { duration: 2000 });
       localStorage.clear();
       window.location.href = '/welcome';  // Redirect to welcome page
+    });
+  }
+
+  // Remove a movie from user's favorite list
+  removeFavoriteMovie(movieId: string): void {
+    const username: string = localStorage.getItem('user') || '';  // Get username from localStorage
+    this.fetchApiData.removeFavoriteMovie(username, movieId).subscribe(() => {
+      this.snackBar.open('Movie removed from favorites', 'OK', { duration: 2000 });
+      this.favoriteMovies = this.favoriteMovies.filter(movie => movie._id !== movieId);  // Update the list in the UI
     });
   }
 }

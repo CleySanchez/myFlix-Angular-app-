@@ -26,7 +26,8 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { GenreDialogComponent } from './genre-dialog/genre-dialog.component';
 import { DirectorDialogComponent } from './director-dialog/director-dialog.component';
-import { DetailsDialogComponent } from './details-dialog/details-dialog.component';  // Import the UserProfileComponent
+import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
+import { FavoritesPageComponent } from './favorites-page/favorites-page.component';  // Import the UserProfileComponent
 
 // Define routes
 const appRoutes: Routes = [
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     UserProfileComponent,
     GenreDialogComponent,
     DirectorDialogComponent,
-    DetailsDialogComponent
+    DetailsDialogComponent,
+    FavoritesPageComponent
   ],
   imports: [
     BrowserModule,

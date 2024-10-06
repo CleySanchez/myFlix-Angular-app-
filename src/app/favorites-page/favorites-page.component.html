@@ -1,0 +1,24 @@
+<header>
+  <mat-toolbar color="primary">
+    <span>MyFlix Favorites</span>
+    <span class="spacer"></span>
+    <a mat-button routerLink="/movies">Movies</a>
+    <a mat-button routerLink="/profile">Profile</a>
+  </mat-toolbar>
+</header>
+
+<!-- Display the favorite movies as a grid -->
+<div class="favorites-grid">
+  <mat-grid-list cols="4" gutterSize="20px" rowHeight="auto">
+    <mat-grid-tile *ngFor="let movie of favoriteMovies">
+      <mat-card>
+        <img mat-card-image [src]="movie.ImagePath" alt="{{ movie.Title }}" />
+        <mat-card-content>
+          <mat-card-title>{{ movie.Title }}</mat-card-title>
+          <p><strong>Genre:</strong> {{ movie.Genre.Name }}</p>
+          <p><strong>Director:</strong> {{ movie.Director.Name }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
