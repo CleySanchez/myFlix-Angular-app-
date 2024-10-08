@@ -1,24 +1,28 @@
 <div class="profile-page">
   <h2>Your Profile</h2>
 
-  <mat-form-field>
-    <input matInput placeholder="Username" [(ngModel)]="userData.Username">
-  </mat-form-field>
+  <div class="profile-form">
+    <mat-form-field>
+      <input matInput placeholder="Username" [(ngModel)]="userData.Username">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Email" [(ngModel)]="userData.Email">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" [(ngModel)]="userData.Email">
+    </mat-form-field>
+  </div>
 
-  <button mat-raised-button color="primary" (click)="updateProfile()">Update Profile</button>
-  <button mat-raised-button color="warn" (click)="deleteProfile()">Delete Profile</button>
+  <div class="profile-actions">
+    <button mat-raised-button color="primary" (click)="updateProfile()">Update Profile</button>
+    <button mat-raised-button color="warn" (click)="deleteProfile()">Delete Profile</button>
+  </div>
 
   <h3>Your Favorite Movies</h3>
-  <div *ngIf="favoriteMovies.length > 0; else noFavorites">
-    <mat-card *ngFor="let movie of favoriteMovies">
+  <div *ngIf="favoriteMovies.length > 0; else noFavorites" class="movie-grid">
+    <mat-card *ngFor="let movie of favoriteMovies" class="movie-card">
       <mat-card-header>
         <mat-card-title>{{ movie.Title }}</mat-card-title>
       </mat-card-header>
-      <img mat-card-image [src]="movie.ImagePath" alt="{{ movie.Title }}">
+      <img mat-card-image [src]="movie.ImagePath" alt="{{ movie.Title }}" class="movie-image">
       <mat-card-actions>
         <button mat-button color="warn" (click)="removeFavoriteMovie(movie._id)">Remove from Favorites</button>
       </mat-card-actions>
@@ -29,4 +33,3 @@
     <p>No favorite movies found. Go ahead and add some!</p>
   </ng-template>
 </div>
-

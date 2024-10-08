@@ -1,3 +1,5 @@
+// movie-card.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FetchApiDataService } from '../fetch-api-data.service';
@@ -33,23 +35,38 @@ export class MovieCardComponent implements OnInit {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
       return this.movies;
+    }, (error: any) => {
+      console.error('Error fetching movies:', error);
+      this.snackBar.open('Error fetching movies', 'OK', { duration: 2000 });
     });
   }
 
   // Add a movie to the user's favorites
   addToFavorites(movieId: string): void {
-    const username = localStorage.getItem('user');  // Get username from localStorage
-    if (username) {
-      this.fetchApiData.addFavoriteMovie(username, movieId).subscribe((response: any) => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');  // Parse user object
+    const userId = user._id;  // Get userId from the parsed user object
+
+    if (userId) {
+      this.fetchApiData.addFavoriteMovie(userId, movieId).subscribe((response: any) => {
         this.snackBar.open('Movie added to favorites!', 'OK', {
           duration: 2000  // Notification duration in milliseconds
         });
+
+        // Update localStorage to include the new favorite movie
+        if (!user.FavoriteMovies.includes(movieId)) {
+          user.FavoriteMovies.push(movieId);
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+
       }, (error: any) => {
         console.log(error);
         this.snackBar.open('Failed to add movie to favorites.', 'OK', {
           duration: 2000
         });
       });
+    } else {
+      this.snackBar.open('User not found. Please log in again.', 'OK', { duration: 2000 });
+      this.router.navigate(['welcome']);  // Redirect to login if userId is missing
     }
   }
 
